@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['firstname']) && !empt
         $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('no-reply@nrfindustry.in', 'NRF INDUSTRY');
+        $mail->setFrom('no-reply@nrfindustry.in', 'Bike Rental Service');
         $mail->addAddress($email);     //Add a recipient
 
 

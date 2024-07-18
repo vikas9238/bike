@@ -1,7 +1,7 @@
 <?php
 require_once('../../config.php');
 if (isset($_GET['id']) && $_GET['id'] > 0) {
-    $qry = $conn->query("SELECT * from `rent_list` where id = '{$_GET['id']}' ");
+    $qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email from `rent_list` r inner join clients c on c.id = r.client_id where r.id = '{$_GET['id']}' ");
     if ($qry->num_rows > 0) {
         foreach ($qry->fetch_assoc() as $k => $v) {
             $$k = stripslashes($v);
@@ -54,20 +54,37 @@ if (isset($bike_id)) {
             <label for="amount" class="control-label">Total Amount</label>
             <input type="number" name="amount" id="amount" class="form-control form-conrtrol-sm rounded-0 text-right" value="<?php echo isset($amount) ? $amount : 0  ?>" required readonly>
         </div>
-        <div class="form-group">
+        <div class="form-group status">
             <label for="" class="control-label">Status</label>
             <select name="status" id="" class="custom-select custol-select-sm">
                 <option value="0" <?php echo $status == 0 ? "selected" : '' ?>>Pending</option>
                 <option value="1" <?php echo $status == 1 ? "selected" : '' ?>>Confirmed</option>
                 <option value="2" <?php echo $status == 2 ? "selected" : '' ?>>Cancelled</option>
-                <option value="5" <?php echo $status == 3 ? "selected" : '' ?>>Picked Up</option>
-                <option value="3" <?php echo $status == 4 ? "selected" : '' ?>>Returned</option>
+                <option value="3" <?php echo $status == 3 ? "selected" : '' ?>>Picked Up</option>
+                <option value="4" <?php echo $status == 4 ? "selected" : '' ?>>Returned</option>
             </select>
+        </div>
+        <div class="form-group reason">
+            <label for="reason" class="control-label">Reason</label>
+            <textarea id="reason" name='reason' class="form-control form no-resize" required></textarea>
         </div>
     </form>
 </div>
-
+<style>
+    .reason {
+        display: none;
+    }
+</style>
 <script>
+    $(".status").change(function() {
+        var status = $(this).find('[name="status"]').val();
+        if (status == 2) {
+            $(".reason").show();
+        } else {
+            $(".reason").hide();
+        }
+    });
+
     function calc_rent_days() {
         var ds = new Date($('#date_start').val())
         var de = new Date($('#date_end').val())
@@ -148,6 +165,13 @@ if (isset($bike_id)) {
             start_loader();
             var id = "<?php echo $_GET['id'] ?>";
             var status = $(this).find('[name="status"]').val();
+            var firstname = "<?php echo $firstname ?>";
+            var lastname = "<?php echo $lastname ?>";
+            var email = "<?php echo $email ?>";
+            var reason = $('#reason').val();
+            var category = '<?php echo $bike_meta['bike_model'] ?>';
+            var amount = $('#amount').val();
+            var company = '<?php echo $bike_meta['brand'] ?>';
             $.ajax({
                 url: _base_url_ + "classes/Master.php?f=save_booking",
                 data: new FormData($(this)[0]),
@@ -172,6 +196,25 @@ if (isset($bike_id)) {
                                     method: 'POST',
                                     data: {
                                         id: id
+                                    },
+                                    dataType: 'json',
+                                });
+                                alert_toast("Mail Send Successfully", 'success');
+                            }
+                        } else if (status == 2) {
+                            var check = confirm("Do you want to send mail to the client?");
+                            if (check == true) {
+                                $.ajax({
+                                    url: _base_url_ + "mail/order_cancel.php",
+                                    method: 'POST',
+                                    data: {
+                                        firstname: firstname,
+                                        lastname: lastname,
+                                        email: email,
+                                        reason: reason,
+                                        category: category,
+                                        amount: amount,
+                                        company: company
                                     },
                                     dataType: 'json',
                                 });

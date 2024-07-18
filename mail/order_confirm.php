@@ -16,7 +16,7 @@ ini_set('memory_limit', '256M'); // Increase PHP memory limit
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
 
   set_time_limit(300); // Increase the maximum execution time to 5 minutes
-  $qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email,c.contact,br.name,ca.category,b.bike_model,b.daily_rate from `rent_list` r inner join clients c on c.id=r.client_id inner join bike_list b on b.id=r.bike_id inner join brand_list br on br.id=b.brand_id inner join categories ca on ca.id=b.category_id where r.id = '{$_GET['id']}' ");
+  $qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email,c.contact,br.name,ca.category,b.bike_model,b.daily_rate from `rent_list` r inner join clients c on c.id=r.client_id inner join bike_list b on b.id=r.bike_id inner join brand_list br on br.id=b.brand_id inner join categories ca on ca.id=b.category_id where r.id = '{$_POST['id']}' ");
   if ($qry->num_rows > 0) {
     foreach ($qry->fetch_assoc() as $k => $v) {
       $$k = $v;
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
             <tr>
               <td>' . $name . '</td>
               <td>' . $category . '</td>
-              <td>' . $bike_modal . '</td>
+              <td>' . $bike_model . '</td>
               <td>' . $rent_days . '</td>
               <td>' . $daily_rate . '</td>
               <td>' . $amount . '</td>
@@ -208,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
     $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('no-reply@nrfindustry.in', 'NRF INDUSTRY');
+    $mail->setFrom('no-reply@nrfindustry.in', 'Bike Rental Service');
     $mail->addAddress($email);     //Add a recipient
 
 
@@ -235,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
                 Booking Start Date: $date_start<br>
                 Booking End Date: $date_end<br>
                 Brand: $name<br>
-                Bike Model: $bike_modal<br>
+                Bike Model: $bike_model<br>
                 Category: $category<br>
                 Rent Days: $rent_days<br>
                 Daily Rate: $daily_rate<br>
