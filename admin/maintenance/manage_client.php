@@ -50,7 +50,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 	$(document).ready(function() {
 		$(".status").change(function() {
 			var status = $(this).find('[name="status"]').val();
-			if (status == 0) {
+			if (status == 1) {
 				$(".reason").show();
 			} else {
 				$(".reason").hide();

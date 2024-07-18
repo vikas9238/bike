@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['firstname']) && !empt
             <h2>Bike Booking Request</h2>
             <p style='font-size: 14px;line-height: 1.6;'>Dear $firstname $lastname,</p>
             <p style='font-size: 14px;line-height: 1.6;'>We hope this message finds you well. We want to inform you that your Bike Rental booking request has been successfully submitted to us.</p>
-            <p style='font-size: 14px;line-height: 1.6;'>For further details, you can also view your profile on our website at www.bike.iframeit.in</p>
+            <p style='font-size: 14px;line-height: 1.6;'>For further details, you can also view your profile on our website at https://bike.iframeit.in</p>
             <p style='color: #d9534f;font-size: 14px;line-height: 1.6;'>If you have any questions or concerns, please feel free to reach out to our customer service team at <b>Email:</b><a href='mailto:$company_email'> $company_email</a> <b>Contact:</b><a href='tel:$mobile'> +91$mobile</a>. We're here to assist you.</p>
             <p style='font-size: 14px;line-height: 1.6;'>Thank you for your understanding and patience.</p>
             <p style='font-size: 14px;line-height: 1.6;'>Best Regards,<br>
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['firstname']) && !empt
             <hr>
             <div style='margin-top: 20px;font-size: 12px;color: #666;'>
                 <p style='font-size: 14px;line-height: 1.6;'>Do not share your login username/password via email or over the phone. NRF Industry Team will never ask for it.</p>
-                <p style='font-size: 14px;line-height: 1.6;'>*For all Term and Condition (t&c), Please refer to the Website <a href='https://nrfindustry.in/'>link</a></p>
+                <p style='font-size: 14px;line-height: 1.6;'>*For all Term and Condition (t&c), Please refer to the Website <a href='https://bike.iframeit.in/'>link</a></p>
             </div>
         </div>
     </div>

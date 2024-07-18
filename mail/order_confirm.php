@@ -15,7 +15,8 @@ use Dompdf\Dompdf;
 ini_set('memory_limit', '256M'); // Increase PHP memory limit
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
 
-  $qry = $conn->query("SELECT b.*,c.firstname,c.lastname,c.email,c.contact,c.address,c.gender,co.name,p.category,q.address as location from `booking_list` b inner join quotation_list q on q.id=b.quotation_id inner join clients c on c.id = b.client_id inner join company_list co on co.id=q.company_id inner join product p on p.id=q.product_id where b.id = '{$_POST['id']}' ");
+  // $qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email,c.contact,c.address,c.gender,br.name,p.category,q.address as location from `rent_list` r inner join bike_list q on q.id=r.quotation_id inner join clients c on c.id = r.client_id inner join brand_list br on br.id=q.company_id inner join product p on p.id=q.product_id where r.id = '{$_POST['id']}' ");
+  $qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email,c.contact,c.address,c.gender,br.name,ca.category,b.bike_model,b.daily_rate from `rent_list` r inner join clients c on c.id=r.client_id inner join bike_list b on b.id=r.bike.id inner join brand_list br on br.id=b.brand_id inner join categories ca on ca.id=b.category_id where r.id = '{$_POST['id']}' ");
   set_time_limit(300); // Increase the maximum execution time to 5 minutes
   if ($qry->num_rows > 0) {
     foreach ($qry->fetch_assoc() as $k => $v) {
@@ -113,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
       <div class="invoice">
         <h1>Invoice</h1>
         <div class="NRF">
-          <h2>NRF INDUSTRY AND TRADING PRIVATE LIMITED</h2>
+          <h2>Bike Rental Service</h2>
            <p>
             <strong
               >' . $_settings->info('address') . '</strong
@@ -121,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
           </p>
           <p><strong>Email:</strong> ' . $_settings->info('email') . '</p>
           <p><strong>Phone:</strong> +91-' . $_settings->info('mobile') . '</p>
-          <p><strong>GST No:</strong> 10AAGCN1641R1ZE</p>
+          <p><strong>GST No:</strong> XXXXXXXXXXXXX</p>
         </div>
         <div class="details">
           <div class="left">
@@ -135,7 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
             <p><strong>Order Details</strong></p>
             <p><strong>Order Id:</strong> #' . $id . '</p>
             <p><strong>Order Date:</strong> ' . $date_created . '</p>
-            <p><strong>Order Confirm Date:</strong> ' . $confirm_order . '</p>
+            <p><strong>Booking Start Date:</strong> ' . $date_start . '</p>
+            <p><strong>Booking End Date:</strong> ' . $date_end . '</p>
             <p><strong>Invoice Download Date:</strong> ' . date('Y-m-d H:i:sa') . '</p>
           </div>
         </div>
@@ -143,31 +145,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
         <table>
           <thead>
             <tr>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>Po Rate</th>
-              <th>Margin</th>
-              <th>Unit Price</th>
+              <th>Brand</th>
+              <th>Category</th>
+              <th>Bike Modal</th>
+              <th>Rent Days</th>
+              <th>Daily Rate</th>
               <th>Total</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>' . $category . ' (' . $name . ', ' . $location . ')' . '</td>
-              <td>' . $approved_quantity . '</td>
-              <td>' . $po_rate . '</td>
-              <td>' . ($po_rate - $daily_rate) . '</td>
+              <td>' . $name . '</td>
+              <td>' . $category . '</td>
+              <td>' . $bike_modal . '</td>
+              <td>' . $rent_days . '</td>
               <td>' . $daily_rate . '</td>
-              <td>' . $daily_rate * $approved_quantity . '</td>
+              <td>' . $amount . '</td>
             </tr>
-            <!-- Additional rows can be added here -->
           </tbody>
         </table>
         <div class="total">
           <p>
             <strong>Total Amount:</strong
             ><span style="font-family: DejaVu Sans; sans-serif;"> &#8377;</span>
-            ' . $daily_rate * $approved_quantity . '
+            ' . $amount . '
           </p>
         </div>
         <div class="signature">
@@ -223,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
     $mail->Body    = "<body style='font-family: Arial, sans-serif;background-color: #f4f4f4;margin: 0;padding: 0;'>
     <div style='background-color: #fff;margin: 0 auto;padding: 20px;max-width: 600px;border: 1px solid #ddd;'>
         <div style='background-color: #00B98E;color: #fff;padding: 10px;text-align: center;'>
-            <h1>NRF INDUSTRY</h1>
+            <h1>Bike Rental</h1>
         </div>
         <div style='padding: 20px;'>
             <h2>Order Confirmation</h2>
@@ -232,10 +233,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['id'])) {
             <p style='font-size: 14px;line-height: 1.6;'>Order Details:<br>
                 Order Id: #$id<br>
                 Date of Order: $date_created<br>
-                Material Name: $category<br>
-                Price: $daily_rate<br>
+                Booking Start Date: $date_start<br>
+                Booking End Date: $date_end<br>
+                Brand: $name<br>
+                Bike Model: $bike_modal<br>
+                Category: $category<br>
+                Rent Days: $rent_days<br>
+                Daily Rate: $daily_rate<br>
                 Total Amount: $amount</p>
-            <p style='font-size: 14px;line-height: 1.6;'>For further details, you can also view this transaction in your profile on our website at www.bike.iframeit.in</p>
+            <p style='font-size: 14px;line-height: 1.6;'>For further details, you can also view this transaction in your profile on our website at https://bike.iframeit.in</p>
             <p style='color: #d9534f;font-size: 14px;line-height: 1.6;'>If you have any urgent inquiries or need further assistance, please don't hesitate to contact our support team at <b>Email:</b><a href='mailto:$company_email'> $company_email</a> <b>Contact:</b><a href='tel:$mobile'> +91$mobile</a>. We're here to assist you.</p>
             <p style='font-size: 14px;line-height: 1.6;'>Thank you for your prompt attention to this matter.</p>
             <p style='font-size: 14px;line-height: 1.6;'>Best Regards,<br>
