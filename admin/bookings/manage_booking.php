@@ -66,7 +66,7 @@ if (isset($bike_id)) {
         </div>
         <div class="form-group reason">
             <label for="reason" class="control-label">Reason</label>
-            <textarea id="reason" name='reason' class="form-control form no-resize" required></textarea>
+            <textarea id="reason" class="form-control form no-resize" required></textarea>
         </div>
     </form>
 </div>
