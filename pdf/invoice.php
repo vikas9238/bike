@@ -117,7 +117,7 @@ $html = '<!DOCTYPE html>
         <div class="details">
           <div class="left">
             <p><strong>Billed To</strong></p>
-            <p><strong>Name:</strong> ' . $firstname . $lastname . '</p>
+            <p><strong>Name:</strong> ' . $firstname  . $lastname . '</p>
             <p><strong>Address:</strong> ' . $address . '</p>
             <p><strong>Contact:</strong> ' . $contact . '</p>
             <p><strong>Email:</strong> ' . $email . '</p>
@@ -147,7 +147,7 @@ $html = '<!DOCTYPE html>
             <tr>
               <td>' . $name . '</td>
               <td>' . $category . '</td>
-              <td>' . $bike_modal . '</td>
+              <td>' . $bike_model . '</td>
               <td>' . $rent_days . '</td>
               <td>' . $daily_rate . '</td>
               <td>' . $amount . '</td>
