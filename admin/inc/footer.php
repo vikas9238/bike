@@ -61,7 +61,7 @@
         </strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-          <b><?php echo $_settings->info('short_name') ?> (by: <a href="" target="blank">Vikas Kumar</a> )</b> v1.0
+          <b><?php echo $_settings->info('short_name') ?> (by: <a href="" target="blank">Vikas Kumar & Shudhanshu Kumar</a> )</b> v1.0
         </div>
       </footer>
     </div>
