@@ -5,7 +5,7 @@ require_once '../vendor/autoload.php';
 use Dompdf\Dompdf;
 
 
-$qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email,c.contact,br.name,ca.category,b.bike_model,b.daily_rate from `rent_list` r inner join clients c on c.id=r.client_id inner join bike_list b on b.id=r.bike_id inner join brand_list br on br.id=b.brand_id inner join categories ca on ca.id=b.category_id where r.id = '{$_GET['id']}' ");
+$qry = $conn->query("SELECT r.*,c.firstname,c.lastname,c.email,c.contact,c.address,br.name,ca.category,b.bike_model,b.daily_rate from `rent_list` r inner join clients c on c.id=r.client_id inner join bike_list b on b.id=r.bike_id inner join brand_list br on br.id=b.brand_id inner join categories ca on ca.id=b.category_id where r.id = '{$_GET['id']}' ");
 if ($qry->num_rows > 0) {
     foreach ($qry->fetch_assoc() as $k => $v) {
         $$k = $v;
