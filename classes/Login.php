@@ -93,7 +93,7 @@ class Login extends DBConnection
             <p style='font-size: 14px;line-height: 1.6;'><em>(This is a system generated mail and should not be replied to)</em></p>
             <hr>
             <div style='margin-top: 20px;font-size: 12px;color: #666;'>
-                <p style='font-size: 14px;line-height: 1.6;'>Do not share your login username/password via email or over the phone. NRF Industry Team will never ask for it.</p>
+                <p style='font-size: 14px;line-height: 1.6;'>Do not share your login username/password via email or over the phone. Bike Rental Team will never ask for it.</p>
                 <p style='font-size: 14px;line-height: 1.6;'>*For all Term and Condition (t&c), Please refer to the Website <a href='https://bike.iframeit.in/'>link</a></p>
             </div>
         </div>
