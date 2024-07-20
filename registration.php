@@ -23,15 +23,15 @@
 
                 <div class="form-group">
                     <label for="" class="control-label">Firstname</label>
-                    <input type="text" class="form-control form-control-sm form" name="firstname" required>
+                    <input type="text" class="form-control form-control-sm form" name="firstname" placeholder="Enter First Name" required>
                 </div>
                 <div class="form-group">
                     <label for="" class="control-label">Lastname</label>
-                    <input type="text" class="form-control form-control-sm form" name="lastname" required>
+                    <input type="text" class="form-control form-control-sm form" name="lastname" placeholder="Enter Last name" required>
                 </div>
                 <div class="form-group">
                     <label for="" class="control-label">Contact</label>
-                    <input type="text" class="form-control form-control-sm form" name="contact" required>
+                    <input type="text" class="form-control form-control-sm form" name="contact" placeholder="Enter Mobile number" pattern="\d{10,10}" title="Please enter valid Mobile Number" required>
                 </div>
                 <div class="form-group">
                     <label for="" class="control-label">Gender</label>
@@ -44,15 +44,15 @@
             <div class="col-lg-7">
                 <div class="form-group">
                     <label for="" class="control-label">Address</label>
-                    <textarea class="form-control form" rows='3' name="address"></textarea>
+                    <textarea class="form-control form" rows='3' name="address" placeholder="Enter Residential address"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="" class="control-label">Email</label>
-                    <input type="email" class="form-control form-control-sm form" name="email" required>
+                    <input type="email" class="form-control form-control-sm form" name="email" placeholder="Enter Email ID" required>
                 </div>
                 <div class="form-group">
                     <label for="" class="control-label">Password</label>
-                    <input type="password" class="form-control form-control-sm form" name="password" required>
+                    <input type="password" class="form-control form-control-sm form" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
                 </div>
                 <div class="form-group d-flex justify-content-between">
                     <a href="javascript:void()" id="login-show">Already have an Account</a>
